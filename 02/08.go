@@ -1,43 +1,41 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 /**
-二维子矩阵的数字之和
+和大于或等于k的最短子数组
 */
 
 /**
-题目：输入一个二维矩阵，如何计算给定左上角坐标和右下角坐标的子矩阵的数字之和？对于同一个二维矩阵，计算子矩阵的数字之和的函数可能由于输入不同的坐标而被反复调用多次。例如，输入图2.1中的二维矩阵，以及左上角坐标为（2，1）和右下角坐标为（4，3）的子矩阵，该函数输出8。
+题目：输入一个正整数组成的数组和一个正整数k
+，请问数组中和大于或等于k
+的连续子数组的最短长度是多少？如果不存在所有数字之和大于或等于k
+的子数组，则返回0。例如，输入数组[5，1，4，3]，k
+的值为7，和大于或等于7的最短连续子数组是[4，3]，因此输出它的长度2。
 */
 
-type NumMatrix struct {
-	sums [][]int
-}
-
-func Constructor(matrix [][]int) NumMatrix {
-	m := len(matrix)
-	if m == 0 {
-		return NumMatrix{}
-	}
-	n := len(matrix[0])
-	sums := make([][]int, m+1)
-	sums[0] = make([]int, n+1)
-	for i, row := range matrix {
-		sums[i+1] = make([]int, n+1)
-		for j, v := range row {
-			sums[i+1][j+1] = sums[i][j+1] + sums[i+1][j] + v - sums[i][j]
+func minSubArrayLen(k int, nums []int) int {
+	left := 0
+	right := 0
+	sum := 0
+	minLength := math.MaxInt
+	for ; right < len(nums); right++ {
+		sum += nums[right]
+		for left <= right && sum >= k {
+			minLength = int(math.Min(float64(minLength), float64(right-left+1)))
+			sum -= nums[left]
+			left++
 		}
 	}
-	return NumMatrix{sums}
+	if minLength == math.MaxInt {
+		return 0
+	} else {
+		return minLength
+	}
 }
-
-func (nm *NumMatrix) SumRegion(row1 int, col1 int, row2 int, col2 int) int {
-	return nm.sums[row2+1][col2+1] - nm.sums[row1][col2+1] - nm.sums[row2+1][col1] + nm.sums[row1][col1]
-}
-
 func main() {
-	m := Constructor([][]int{{3,0,1,4,2},{5,6,3,2,1},{1,2,0,1,5},{4,1,0,1,7},{1,0,3,0,5}})
-	fmt.Println(m)
-	fmt.Println(m.SumRegion(2,1,4,3))
-	fmt.Println(m.SumRegion(1,1,2,2))
+	fmt.Print(minSubArrayLen(7, []int{5, 1, 4, 3}))
 }

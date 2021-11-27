@@ -1,28 +1,102 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 /**
-左右两边子数组的和相等
+数组中和为0的3个数字
 */
 /**
-题目：输入一个整数数组，如果一个数字左边的子数组的数字之和等于右边的子数组的数字之和，那么返回该数字的下标。如果存在多个这样的数字，则返回最左边一个数字的下标。如果不存在这样的数字，则返回-1。例如，在数组[1，7，3，6，2，9]中，下标为3的数字（值为6）的左边3个数字1、7、3的和与右边两个数字2和9的和相等，都是11，因此正确的输出值是3。
+题目：输入一个数组，如何找出数组中所有和为0的3个数字的三元组？需要注意的是，返回值中不得包含重复的三元组。例如，在数组[-1，0，1，2，-1，-4]中有两个三元组的和为0，它们分别是[-1，0，1]和[-1，-1，2]。
 */
 
-func pivotIndex(nums []int) int {
-	total := 0
-	for _, num := range nums {
-		total += num
-	}
-	sum := 0
-	for i := 0; i < len(nums); i++ {
-		sum += nums[i]
-		if sum-nums[i] == total-sum {
-			return i
+/**
+操作符 & 取变量地址，使用 * 的意思是以指针的方式间接访问目标对象，打了*的就好比变量的替身，相当于快捷方式
+*/
+func twoSum1(nums []int, i int, result [][]int) [][]int {
+	var result2 [][]int
+	j := i + 1
+	k := len(nums) - 1
+	for {
+		if j < k {
+			if nums[i]+nums[j]+nums[k] == 0 {
+				result2 = append(result2, []int{nums[i], nums[j], nums[k]})
+				// 去重
+				temp := nums[j]
+				for {
+					if temp == nums[j] && j < k {
+						j++
+					} else {
+						break
+					}
+				}
+			} else if nums[i]+nums[j]+nums[k] < 0 {
+				j++
+			} else {
+				k--
+			}
+
+		} else {
+			break
 		}
 	}
-	return -1
+	result = append(result2, result...)
+	return result
+}
+
+func twoSum2(nums []int, i int, result *[][]int) {
+	j := i + 1
+	k := len(nums) - 1
+	for {
+		if j < k {
+			if nums[i]+nums[j]+nums[k] == 0 {
+				*result = append(*result, []int{nums[i], nums[j], nums[k]})
+				// 去重
+				temp := nums[j]
+				for {
+					if temp == nums[j] && j < k {
+						j++
+					} else {
+						break
+					}
+				}
+			} else if nums[i]+nums[j]+nums[k] < 0 {
+				j++
+			} else {
+				k--
+			}
+
+		} else {
+			break
+		}
+	}
+}
+func threeSum(nums []int) [][]int {
+	var result [][]int
+	if len(nums) >= 3 {
+		sort.Ints(nums)
+		i := 0
+		for {
+			if i < len(nums)-2 {
+				twoSum2(nums, i, &result)
+				temp := nums[i]
+				for {
+					if i < len(nums) && nums[i] == temp {
+						i++
+					} else {
+						break
+					}
+				}
+			} else {
+				break
+			}
+		}
+	}
+
+	return result
 }
 func main() {
-	fmt.Print(pivotIndex([]int{1, 7, 3, 6, 5, 6}))
+	fmt.Print(threeSum([]int{-1, 0, 1, 2, -1, -4}))
 }

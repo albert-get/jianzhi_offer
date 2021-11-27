@@ -1,37 +1,32 @@
 package main
 
-import (
-	"fmt"
-	"math"
-)
+import "fmt"
 
 /**
-0和1个数相同的子数组
+排序数组中的两个数字之和
 */
 /**
-题目：输入一个只包含0和1的数组，请问如何求0和1的个数相同的最长连续子数组的长度？例如，在数组[0，1，0]中有两个子数组包含相同个数的0和1，分别是[0，1]和[1，0]，它们的长度都是2，因此输出2。
+题目：输入一个递增排序的数组和一个值k，请问如何在数组中找出两个和为k的数字并返回它们的下标？
+假设数组中存在且只存在一对符合条件的数字，同时一个数字不能使用两次。例如，输入数组[1，2，4，6，10]，k的值为8，数组中的数字2与6的和为8，它们的下标分别为1与3。
 */
-
-func findMaxLength(nums []int) int {
-	sumToIndex := make(map[int]int)
-	sumToIndex[0] = -1
-	sum := 0
-	maxLength := 0
-	for i := 0; i < len(nums); i++ {
-		if nums[i] == 0 {
-			sum += -1
+func twoSum(numbers []int, target int) []int {
+	i := 0
+	j := len(numbers) - 1
+	for {
+		temp := numbers[i] + numbers[j]
+		if i < j && temp != target {
+			if temp < target {
+				i++
+			} else {
+				j--
+			}
 		} else {
-			sum += nums[i]
-		}
-		index, ok := sumToIndex[sum]
-		if ok {
-			maxLength = int(math.Max(float64(i-index), float64(maxLength)))
-		} else {
-			sumToIndex[sum] = i
+			break
 		}
 	}
-	return maxLength
+	return []int{i, j}
 }
+
 func main() {
-	fmt.Print(findMaxLength([]int{0, 1, 0}))
+	fmt.Print(twoSum([]int{1, 2, 4, 6, 10}, 8))
 }
