@@ -4,6 +4,16 @@ type ListNode struct {
 	Val  int
 	Next *ListNode
 }
+type Node struct {
+	Val   int
+	Prev  *Node
+	Next  *Node
+	Child *Node
+}
+
+//func ConstructorST() *Node {
+//
+//}
 
 func ConstructorHuan(arr []int, n int) *ListNode {
 	head := ListNode{}
@@ -33,31 +43,31 @@ func Constructor(arr []int) *ListNode {
 	}
 	return head.Next
 }
-func ConstructorJiao(arr1 []int,arr2 []int,arr3 []int) (*ListNode,*ListNode){
-	head1:=ListNode{}
+func ConstructorJiao(arr1 []int, arr2 []int, arr3 []int) (*ListNode, *ListNode) {
+	head1 := ListNode{}
 	p1 := &head1
 	for _, v := range arr1 {
 		cur := &ListNode{Val: v}
 		p1.Next = cur
 		p1 = p1.Next
 	}
-	head2:=ListNode{}
-	p2:=&head2
-	for _,v :=range arr2{
+	head2 := ListNode{}
+	p2 := &head2
+	for _, v := range arr2 {
 		cur := &ListNode{Val: v}
-		p2.Next=cur
-		p2=p2.Next
+		p2.Next = cur
+		p2 = p2.Next
 	}
-	head3:=ListNode{}
-	p3:=&head3
-	for _,v:=range arr3{
+	head3 := ListNode{}
+	p3 := &head3
+	for _, v := range arr3 {
 		cur := &ListNode{Val: v}
-		p3.Next=cur
-		p3=p3.Next
+		p3.Next = cur
+		p3 = p3.Next
 	}
-	p1.Next=head3.Next
-	p2.Next=head3.Next
-	return head1.Next,head2.Next
+	p1.Next = head3.Next
+	p2.Next = head3.Next
+	return head1.Next, head2.Next
 }
 func ReverseList(head *ListNode) *ListNode {
 	prev := ListNode{}.Next
