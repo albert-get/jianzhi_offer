@@ -10,10 +10,36 @@ type Node struct {
 	Next  *Node
 	Child *Node
 }
+type ToST struct {
+	Arr []int
+	Num int
+}
 
-//func ConstructorST() *Node {
-//
-//}
+func ConstructorST(data []ToST) *Node {
+	var nodeArr []Node
+	var child *Node
+	for _,item :=range data{
+		head:=Node{}
+		temp:=&head
+
+		for i,v :=range item.Arr{
+			p:=&Node{Val: v}
+			if child!=nil&&i==0{
+				child.Child=p
+			}
+			if i==item.Num{
+				child=p
+			}
+			temp.Next=p
+			if i!=0{
+				p.Prev=temp
+			}
+			temp=temp.Next
+		}
+		nodeArr=append(nodeArr,head)
+	}
+	return nodeArr[0].Next
+}
 
 func ConstructorHuan(arr []int, n int) *ListNode {
 	head := ListNode{}
