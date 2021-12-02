@@ -31,6 +31,11 @@ func (q *QueueInt) Pop() int {
 	*q = (*q)[1:]
 	return top
 }
+func (q *QueueInt) Peek() int {
+
+	top := (*q)[0]
+	return top
+}
 
 func (q *QueueInt) IsEmpty() bool {
 	return len(*q) == 0
