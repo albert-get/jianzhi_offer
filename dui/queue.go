@@ -11,6 +11,10 @@ func (q *Queue) Pop() interface{} {
 	*q = (*q)[1:]
 	return top
 }
+func (q *Queue) Peek() interface{} {
+	top := (*q)[0]
+	return top
+}
 func (q *Queue) IsEmpty() bool {
 	return len(*q) == 0
 }
