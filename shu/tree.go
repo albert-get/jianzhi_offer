@@ -123,3 +123,59 @@ func PostorderTraversalT(root *TreeNode) []int {
 	}
 	return result
 }
+type BSTIterator struct {
+	cur   *TreeNode
+	stack *zhan.Stack
+}
+
+func Constructor(root *TreeNode) BSTIterator {
+	return BSTIterator{
+		cur:   root,
+		stack: zhan.NewStack(),
+	}
+}
+func (bs *BSTIterator) hasNext() bool {
+	if bs.cur != nil || !bs.stack.IsEmpty() {
+		return true
+	} else {
+		return false
+	}
+}
+func (bs *BSTIterator) next() int {
+	for bs.cur != nil {
+		bs.stack.Push(bs.cur)
+		bs.cur = bs.cur.Left
+	}
+	node, _ := bs.stack.Pop().(*TreeNode)
+	val := node.Val
+	bs.cur = node.Right
+	return val
+}
+
+type BSTIteratorReversed struct {
+	cur   *TreeNode
+	stack *zhan.Stack
+}
+
+func constructorBR(root *TreeNode) (br BSTIteratorReversed) {
+	br.cur = root
+	br.stack = zhan.NewStack()
+	return br
+}
+func (br *BSTIteratorReversed) hasPrev() bool {
+	if br.cur != nil || !br.stack.IsEmpty() {
+		return true
+	} else {
+		return false
+	}
+}
+func (br *BSTIteratorReversed) prev() int {
+	for br.cur != nil {
+		br.stack.Push(br.cur)
+		br.cur = br.cur.Right
+	}
+	node, _ := br.stack.Pop().(*TreeNode)
+	val := node.Val
+	br.cur = node.Left
+	return val
+}
