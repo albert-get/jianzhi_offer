@@ -90,6 +90,31 @@ func (h *MinHeapMap) Push(x interface{}) {
 }
 
 type MinHeapArr [][]int
+func (h MinHeapArr) Len() int { return len(h) }
+
+func (h MinHeapArr) Less(i, j int) bool { return h[j][0]+h[j][1] < h[i][0]+h[i][1] }
+
+func (h MinHeapArr) Swap(i, j int) {
+	h[i], h[j] = h[j], h[i]
+}
+
+func (h *MinHeapArr) Pop() interface{} {
+	old := *h
+	n := len(old)
+
+	x := old[n-1]
+	*h = old[0 : n-1]
+	return x
+}
+func (h *MinHeapArr) Peek() []int {
+	old := *h
+	x := old[0]
+	return x
+}
+
+func (h *MinHeapArr) Push(x interface{}) {
+	*h = append(*h, x.([]int))
+}
 func ConMinHeapArr(h MinHeapArr,nums1 []int,nums2 []int) MinHeapWA {
 	m:=MinHeapWA{
 		h:&h,

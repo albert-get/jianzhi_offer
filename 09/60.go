@@ -5,7 +5,6 @@ import (
 	"debug/dwarf"
 	"fmt"
 	"harry.com/jianzhi_offer/duu"
-	"math"
 )
 
 /**
@@ -42,29 +41,10 @@ func topKFrequent(nums []int, k int) []int {
 	return result
 }
 
-func kSmallestPairs(sum1 []int, sum2 []int, k int) [][]int {
-	minHeap := duu.ConMinHeapArr([][]int{}, sum1, sum2)
-	if len(sum2) > 0 {
-		for i := 0; i < int(math.Min(float64(k), float64(len(sum1)))); i++ {
-			heap.Push(&minHeap, []int{i, 0})
-		}
-	}
-	var result [][]int
-	for ; k > 0 && minHeap.Len() > 0; k-- {
-		ids, _ := heap.Pop(&minHeap).([]int)
-		result = append(result, []int{sum1[ids[0]], sum2[ids[1]]})
-		if ids[1] < len(sum2)-1 {
-			heap.Push(&minHeap, []int{ids[0], ids[1] + 1})
-		}
-	}
-	return result
-}
-func main() {
-	//r := topKFrequent([]int{1, 2, 2, 1, 3, 1}, 2)
-	//fmt.Println(r)
 
-	num1 := []int{1, 5, 13, 21}
-	num2 := []int{2, 4, 9, 15}
-	r := kSmallestPairs(num1, num2, 3)
+func main() {
+	r := topKFrequent([]int{1, 2, 2, 1, 3, 1}, 2)
 	fmt.Println(r)
+
+
 }
