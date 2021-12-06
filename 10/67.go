@@ -20,8 +20,8 @@ func buildTrie(nums []int32) *tirenode {
 	root := new(tirenode)
 	for _, num := range nums {
 		node := root
-		for i := int32(30); i >= 0; i-- {
-			bit := (num >> i) & i
+		for i := int32(5); i >= 0; i-- {
+			bit := (num >> i) & 1
 			if node.children[bit] == nil {
 				node.children[bit] = new(tirenode)
 			}
@@ -37,8 +37,8 @@ func findMaximumXOR(nums []int32) int {
 		node := root
 		xor := 0
 
-		for i := int32(30); i >= 0; i-- {
-			bit := (num >> i) & i
+		for i := int32(5); i >= 0; i-- {
+			bit := (num >> i) & 1
 			if node.children[1-bit] != nil {
 				xor = xor<<1 + 1
 				node = node.children[1-bit]
