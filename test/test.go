@@ -1,12 +1,12 @@
 package main
 
-import (
-	"fmt"
-	"math/rand"
-	"time"
-)
+import "fmt"
 
 func main() {
-	rand.Seed(time.Now().Unix())
-	fmt.Println(rand.Intn(10))
+	a:=[]int{1,2,3,4,5}
+	b:=make([]int,len(a))
+	copy(b,a)
+	b[0]=9
+	a[0]=100
+	fmt.Println(a,b)
 }
