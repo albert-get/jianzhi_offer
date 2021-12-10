@@ -1,5 +1,7 @@
 package set
 
+import "math"
+
 type exists struct{}
 type Set struct {
 	M map[interface{}]exists
@@ -48,4 +50,10 @@ func (s *ISet) Contains(item int) bool {
 }
 func (s *ISet) Size() int {
 	return len(s.M)
+}
+func (s *ISet) Next() int {
+	for i,_ :=range s.M{
+		return i
+	}
+	return math.MinInt
 }
